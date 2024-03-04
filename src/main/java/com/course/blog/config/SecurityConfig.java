@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.course.blog.config.auth.PrincipalDetailService;
-
+ 
 //빈등록: 스프링컨테이너에서 객체를 관리할 수 있게 하는 것
 @Configuration
 //시큐리티가 모든 요청을 가로챈다 --> http요청시 컨트롤러로가서 메서드가 실행되는데 메서드가 실행되기 전에 해당 객체가 동작해서 필터링을 해야함 
@@ -21,6 +21,7 @@ import com.course.blog.config.auth.PrincipalDetailService;
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	//이거 뭐냐
 	@Bean // 해당 메서드를 스프링이 관리
 	public BCryptPasswordEncoder encodePWD() {
 		return new BCryptPasswordEncoder(); // encodePWD()를 호출하면 BCryptPasswordEncoder객체를 리턴받을 수 있다.
