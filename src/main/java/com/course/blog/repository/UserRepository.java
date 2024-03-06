@@ -3,35 +3,17 @@ package com.course.blog.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.course.blog.model.User;
 
-
-//해당 JpaRepository는 User테이블을 관리하는 Repositroy (CRUD만 하고싶다면 비워둠)
-//JpaRepositroy는 @Repository생략이 가능하다-> 자동으로 Bean으로 등록됨
-@Repository
+//User테이블을 관리하는 Repository (CRUD만 하고싶다면 비워둠)
 public interface UserRepository extends JpaRepository<User, Integer>{
+//	Select * From user WHERE username=1?;  (첫번째 파라미터가 1?에 들어감)
+//	Optional<User> findByUsername(String username);
 
-	
-	//Select * From user WHERE username=1?;  (첫번째 파라미터가 1?에 들어감)
+
+	// "user" 테이블에서 모든 열을 가져오지만, WHERE 절에서는 username이 지정된 값과 일치하는 행만 반환한다.
+	@Query(value = "SELECT * FROM `user` WHERE username = ?1", nativeQuery = true)
 	Optional<User> findByUsername(String username);
-	
-	
 }
-
-
-
-
-
-
-
-//[ 전통적인 방법의 로그인처리 로직]
-//JPA네이밍쿼리 
-//SELECT * FROM user WHERE username =?1 AND Password =?2 ;  와 같다 . 
-//User findByUsernameAndPassword(String username,String password);
-
-
-//@Query(value="SELECT * FROM user WHERE username =?1 AND Password =?2",nativeQuery = true)
-//User login(String username,String password);
-//	

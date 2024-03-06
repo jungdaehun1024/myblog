@@ -15,30 +15,30 @@ import com.course.blog.config.auth.PrincipalDetailService;
  
 //빈등록: 스프링컨테이너에서 객체를 관리할 수 있게 하는 것
 @Configuration
-//시큐리티가 모든 요청을 가로챈다 --> http요청시 컨트롤러로가서 메서드가 실행되는데 메서드가 실행되기 전에 해당 객체가 동작해서 필터링을 해야함 
+
+//스프링 시큐리티를 웹 보안 구성에 사용할 것. HTTP요청이 컨트롤러로 진입하기 전 
+// 스프링 시큐리티 필터체인을 거치게한다.
 @EnableWebSecurity // 시큐리티 필터 등록 ==> 이미 활성화된 스프링시큐리티가 어떤 설정을 해당 파일에서 하겠다.
-@EnableGlobalMethodSecurity(prePostEnabled = true) // 특정 주소로 접근하면 권한 및 인증을 미리 체크하겠다.
+@EnableGlobalMethodSecurity(prePostEnabled = true) // 메소드 수준의 보안을 활성화 
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	//이거 뭐냐
 	@Bean // 해당 메서드를 스프링이 관리
+	//Bcrypt해시 함수를 사용해 비밀번호를 안전하게 암호화한다.
 	public BCryptPasswordEncoder encodePWD() {
 		return new BCryptPasswordEncoder(); // encodePWD()를 호출하면 BCryptPasswordEncoder객체를 리턴받을 수 있다.
 	}
 	
 	@Bean	
 	@Override
+	//시큐리티에서 제공하는 인증 매니저이다. 사용자의 인증및 권한 부여를 할 때 필요한 Bean
+	//주로 사용자 인증정보를 검증하고 인증된 사용자에 대한 인증 객체를 반환
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
 	}
-
-
 	@Autowired
 	private PrincipalDetailService principalDetailService;
 	
-	//시큐리티가 대신 로그인 해줄때 password를 가로채기한다.
-	//해당 password가 어떤 값으로 해쉬가 되어 회원가입이 되었는지 알야야 같은 해쉬로 암호화해서 DB에 있는 해쉬와 비교 가능 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     	//principalDetailService을 통해서 로그인을 할 때 패스워드 처리를 encodePWD메서드로 인코드 하고 비교를 자동으로 해줌 
@@ -55,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticated() // 인증되어야 한다
 			.and()
 				.formLogin()
-				.loginPage("/auth/loginForm") // 인증이 필요한 페이지에 접근시 로그인창이 자동으로 뜸
-				.loginProcessingUrl("/auth/loginProc") // 스프링시큐리티가 해당 주소로 오는 로그인을 가로채서 대신 로그인한다. UserDetails타입의 User오브젝트를 만들어야함
+				.loginPage("/auth/loginForm") //  로그인 페이지의 경로를 지정합니다.
+				.loginProcessingUrl("/auth/loginProc") // 로그인 처리를 담당하는 URL을 지정합니다. 이 URL에 대한 요청은 Spring Security가 가로채서 사용자를 인증하고 로그인을 처리
 				.defaultSuccessUrl("/"); // 로그인이 정상적으로 완료시 이동 url
 
 	}

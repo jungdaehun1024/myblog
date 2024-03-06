@@ -40,10 +40,9 @@ public class BoardController {
 	//게시글상세페이지 호출 메서드
 	//쿼리스트링형태로 id값을 받아  받아온 id값으로 상세 게시글을 보여준다.
 	//model인터페이스를 통해 뷰로 전달
-	@GetMapping("/board")
-	public String boardDetails(@RequestParam int id, Model model) {
+	@GetMapping("/board/{id}")
+	  public String boardDetails(@PathVariable int id, Model model) {
 		model.addAttribute("board",boardService.글상세보기(id));	
-		
 		return "/board/detail";
 	}
 	

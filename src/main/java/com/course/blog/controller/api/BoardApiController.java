@@ -26,7 +26,7 @@ public class BoardApiController {
     @PostMapping("/api/board")
 	public ResponseDto<Integer> save(@RequestBody Board board,@AuthenticationPrincipal PrincipalDetail principal){//@RequestBody: httpBody데이터를 받는다.,@AuthenticationPrincipal : 현재 세션정보를 가져온다.
     	// principal객체는 현재 세션의 유저정보 확인을 위해 필요
-    	// getUser를 하기 위해서 PrincipalDetail클래스에 getter를 붙여주어야 함 
+    	// getUser를 하기 위해서 PrincipalDetail클래스에 getter를 붙여주어야 함  PrincipalDetails의 User정보를 받아오기위함
     	boardService.글작성(board,principal.getUser());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
 	}
@@ -46,7 +46,7 @@ public class BoardApiController {
     
     //데이터를 받을 때 컨트롤러에서 dto만들어주서 받는게 좋다. 
     @PostMapping("/api/board/{boardId}/reply")
-  	public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto){//@RequestBody: httpBody데이터를 받는다.,@AuthenticationPrincipal : 현재 세션정보를 가져온다.
+  	public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto){//@RequestBody: httpBody데이터를 받는다
     
    
       	boardService.댓글쓰기(replySaveRequestDto);

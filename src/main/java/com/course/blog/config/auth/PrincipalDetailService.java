@@ -16,9 +16,9 @@ public class PrincipalDetailService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepsitory;
 
-	// 스프링요청을 가로챌때 username, password 변수 2개를 가로챈다.
-	// username이 DB에 있는지 확인해주면됨 (password는 SecurityConfig로직에서 처리)
-	// 해당 메서드를 통해 로그인이 된다.
+//	UserDetailsService를 사용하여 사용자의 인증 정보를 가져오고, 이 정보를 기반으로 사용자의 인증을 처리합니다
+// 사용자가 제공한 사용자명을 토대로 loadUserByUsername 메소드가 호출되어 사용자 정보를 가져오게 됩니다. 
+//	이 정보를 스프링 시큐리티가 제공하는 UserDetails 객체로 변환하여 인증에 활용합니다.
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User principal = userRepsitory.findByUsername(username).orElseThrow(() -> {

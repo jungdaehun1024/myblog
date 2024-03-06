@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class User {
 	
 	@Id //해당 column이 PK
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // PK처리방식을 DB에 위임 (A.I)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // PK처리방식을 DB에 위임
 	private int id;
 	
 	@Column(nullable = false,length = 30 ,unique = true) //NotNull , 길이 30, 중복값 허용 X

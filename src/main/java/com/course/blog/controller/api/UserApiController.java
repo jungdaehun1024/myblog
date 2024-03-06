@@ -1,7 +1,5 @@
 package com.course.blog.controller.api;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,42 +22,25 @@ public class UserApiController {
 	private UserService userService;
 	
 	@Autowired
-	private AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;// 해당 인터페이스를 구현하는 클래스는 사용자의 인증을 처리하고 인증이 성공하면 Authentication객체 반환
 	
     @PostMapping("/auth/joinProc")
-    //json기반의 데이터 요청의 경우 @RequestBody를 사용한다. (http요청의 바디내용을 자바객체로 변환)
+    //json기반의 데이터 요청의 경우 @RequestBody를 사용한다. (http요청의 바디내용(Json)을 자바객체로 변환)
 	public ResponseDto<Integer> save(@RequestBody User user ){ 
-    	System.out.println("save()");
     	userService.회원가입(user);
-		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(),1); //http 상태코드와 1을포함한 ResponseDTO객체를 반환
 	}
     
     @PutMapping("/user")
     public ResponseDto<Integer> update(@RequestBody User user){
     	userService.회원수정(user);
+    	//UsernamePasswordAuthenticationToken은 새로운 username,password를 받아 인증객체를 반환하고 authenticate()에 전달한다. authenticate는 
+    	//UsernamePasswordAuthenticationToken로 인증된 인증객체를 유효하다고 판단해 Authentication객체를 반환
     	Authentication authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+    	
+
+    	// 현재 실행 중인 스레드의 보안 컨텍스트를 조회하고, 그 안에 있는 현재 사용자의 인증 정보를 주어진 Authentication 객체로 설정
     	SecurityContextHolder.getContext().setAuthentication(authentication);
     	return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
- 
-    
     }
- 
-    
-    
 }
-
-
-
-
-//스프링부트 전통적인 로그인 로직 
-//@PostMapping("/api/user/login")
-//httpsession은 @autowired해서 받는게 가능 ==> 세션 객체는 스프링컨테이너가 빈으로 등록해서 가지고있는다는 것 
-//필요시 DI해서 쓸수 있다는 것==> 컨트롤러 함수의 매개변수로만 해도 된다.
-//public ResponseDto<Integer> login(@RequestBody User user,HttpSession session){
-//	User principal = userService.로그인(user);  // principal =>접근 주체라는 뜻 
-//	if(principal != null) {
-//		session.setAttribute("principal", principal);
-//	}
-//	
-//	return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
-//}

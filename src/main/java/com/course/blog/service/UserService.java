@@ -1,7 +1,5 @@
 package com.course.blog.service;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,39 +19,37 @@ public class UserService {
 	
  @Transactional
  public void 회원가입(User user) {
-	    String rawPassword = user.getPassword();
-	    String encPassword = encoder.encode(rawPassword); //해쉬화 
-	    user.setPassword(encPassword);
-	    user.setRole(RoleType.USER);
-		userRepository.save(user);
+	 	
+	    String rawPassword = user.getPassword();//사용자가 입력한 원시 비밀번호
+	    
+	    String encPassword = encoder.encode(rawPassword); //입력한 비밀번호를 해시화해 저장
+	    
+	    user.setPassword(encPassword);//사용자 비밀번호가 해시화된 값으로 설정
 	 
+	    user.setRole(RoleType.USER); // 권한은 USER
+		userRepository.save(user); // 사용자 저장
+	 
+		//함수가 종료되면 더티체킹 방식으로 DB에 commit
  }
+ 
  
  @Transactional
  public void 회원수정(User user) {
+	 //유저 정보를 가져온다.
 	 User persistance = userRepository.findById(user.getId())
 			 .orElseThrow(()->{
-				return new IllegalArgumentException("회원찾기 실패");
+				return new IllegalArgumentException("회원찾기 실패"); // 사용자를 못찾았을때 예외
 			 });
 	 
-	 String rawPassword =user.getPassword();
-	 String encPassword = encoder.encode(rawPassword);
-	 persistance.setPassword(encPassword);
-	 persistance.setEmail(user.getEmail());
+	
+	 String rawPassword =user.getPassword(); //유저가 회원수정란에서 수정한 원시 비밀번호
+	 
+	 String encPassword = encoder.encode(rawPassword); // 수정한 비밀번호 해시화
+	 persistance.setPassword(encPassword); // 유저의 passowrd정보 수정
+	 persistance.setEmail(user.getEmail());// 이메일 수정
  }
  
-
 }
-
-
-//전통적인 방식의 로그인 로직 
-//@Transactional(readOnly =true) //select할 때 트랜잭션 시작 , 해당 서비스가 종료될 때 트랜잭션 종료가 되는데 이 때까지 정합성을 유지할 수 있다.
-//public User 로그인(User user) {
-//	  return userRepository.findByUsernameAndPassword(user.getUsername(),user.getPassword());
-//}
-
-
-
 
 //서비스는 트랜잭션을 관리하기 위해 필요함 
 //여러 로직이 묶에 하나의 서비스가 될 수 있다 ==> 
