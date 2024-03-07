@@ -1,38 +1,43 @@
 let index={
     init:function(){
+		//id를 btn-save로 가진 HTML요소가 클릭됐을 때 save함수를 실행시킨다.
         $("#btn-save").on("click",()=>{
             this.save();
         });
+        //id를 btn-update로 가진 HTML요소가 클릭됐을 때 update함수를 실행시킨다.
         $("#btn-update").on("click",()=>{
             this.update();
         });
+        
+        //id를 btn-delete로 가진 HTML요소가 클릭됐을 때 deleteById함수를 실행시킨다.
         $("#btn-delete").on("click",()=>{
             this.deleteById();
         });
         
-           $("#btn-reply-save").on("click",()=>{
+        //id를 btn-reply-save로 가진 HTML요소가 클릭됐을 때 reply-save함수를 실행시킨다.
+        $("#btn-reply-save").on("click",()=>{
             this.replySave();
         });
     },
    
     save: function(){
-
+		
         let data = {
-            title: $("#title").val(),
-            content: $("#content").val(),
+            title: $("#title").val(), // id가 title인 input태그의 값을 가져온다.
+            content: $("#content").val(), //id가 content인 input태그의 값을 가져온다.
         };
 
 
         $.ajax({
           type:"POST",                                                   
           url:"/api/board",                                           
-          data:JSON.stringify(data),                                    
-          contentType:"application/json;charset=utf-8",
-          dataType:"json"
-        }).done(function(resp){
+          data:JSON.stringify(data),   //JS객체를 JOSN문자열로                                  
+          contentType:"application/json;charset=utf-8", // JSON타입을 요청으로 보낸다.
+          dataType:"json" // 서버에서는 JSON타입의 데이터를 받는다.
+        }).done(function(resp){ //요청 성공시 "글작성 완료됨"이 알러트 메시지로 나온다.
         alert("글작성이 완료됨");
-        location.href="/";
-        }).fail(function(error){
+        location.href="/"; //완료 후 인덱스 페이지로 이동 
+        }).fail(function(error){  // 요청 실패했을 때는 error객체를 JSON형태로 알러트메시지로 보여줌
             alert(JSON.stringify(error));
 
        
@@ -40,20 +45,20 @@ let index={
     },
     
      update: function(){
-        let id = $("#id").val();
-        
+
+        let id = $("#id").val(); //게시글 번호(id)를 받아온다.
         let data = {
-            title: $("#title").val(),
-            content: $("#content").val(),
+            title: $("#title").val(), // title을 받아온다.
+            content: $("#content").val(), // content 를 받아온다.
         };
 
 
         $.ajax({
-          type:"PUT",                                                   
+          type:"PUT",                                                 
           url:"/api/board/"+id,                                           
-          data:JSON.stringify(data),                                    
-          contentType:"application/json;charset=utf-8",
-          dataType:"json"
+          data:JSON.stringify(data),    //data객체를 Json형식의 문자열로                                 
+          contentType:"application/json;charset=utf-8", //Json타입을 요청으로 
+          dataType:"json" // 서버는 Json타입의 데이터를 받는다.
         }).done(function(resp){
         alert("글수정이 완료됨");
         location.href="/";
