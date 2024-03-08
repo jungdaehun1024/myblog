@@ -12,7 +12,6 @@
   </div>
 </c:forEach>
 
-
 <!--페이징 로직  -->
 <ul class="pagination">
  <c:choose>
@@ -23,7 +22,6 @@
    <li class="page-item"  ><a class="page-link" href="?page=${boards.number-1}">Previous</a></li>
  </c:otherwise>
 </c:choose>
-
  <c:choose>
  <c:when test="${boards.last}">  <!-- page객체가 가지는 Pageable에서 last: 마지막 페이지 -->
    <li class="page-item disabled"  ><a class="page-link" href="?page=${boards.number+1}">Next</a></li> <!-- 마지막 페이지라면 Next버튼 disabled -->
@@ -32,7 +30,22 @@
    <li class="page-item"><a class="page-link" href="?page=${boards.number+1}">Next</a></li>
  </c:otherwise>
 </c:choose>
-
 </ul>
-<script src="/js/WebSocket.js"></script>
+
+<div>
+<!-- 정렬 방법 -->
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   글 정렬
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="/">최신순</a>
+    <a class="dropdown-item" href="/past">과거순</a>
+  </div>
+  <!--  -->
+<input id="search" placeholder="검색어를 입력하세요">
+<button id="btn-search" class="btn btn-secondary">검색</button>
+
+</div>
+</div>
 <%@ include file="layout/footer.jsp" %>

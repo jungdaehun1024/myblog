@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
 
-
 <div class="container">
 
 	<form>

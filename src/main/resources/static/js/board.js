@@ -124,14 +124,10 @@ let index={
         });
  
     },
-     
+ 	    
       
-    }
+ }
 
 
-// index객체 내에 
-// init on함수를 이용해서 #btn-save를 클릭시 save함수를 호출
-
-// save함수
-// data 객체 안에 username,password,emial을 joinForm.jsp의 form태그에 있는 username,password,email값을 가져와 매핑
+// 이벤트 핸들러를 설정
 index.init();

@@ -3,7 +3,6 @@
 
 <br>
 <div class="jumbotron text-center" style="margin-bottom:0">
-  <p>환자 커뮤니티</p>
   <p>Email: wjdeogns1058@naver.com</p>
 </div>
 

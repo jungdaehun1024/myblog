@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.course.blog.service.BoardService;
 //HTTP요청을 처리하는 컨트롤러역할을 수행하는 클래스 
@@ -21,11 +20,17 @@ public class BoardController {
 
 	//HTTP GET요청을 처리한다.
 	@GetMapping({ "", "/" })
-	
 	//@PageableDefault:페이징을 위한 정보가 담겨있는 인터페이스,[시작페이지:0 , 한페이지에 글 3개씩 , 정렬기준:id , 내림차순]
 	// 해당 어노테이션에서 지정한 페이지 설정은 Pageable인터페이스의 객체에 반영되어 메서드 호출시 사용된다.
 	// boardService.글목록(pageable)실행 결과를 boards라는 이름으로 뷰에 전달
 	public String index(Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.DESC) Pageable pageable) {
+		model.addAttribute("boards", boardService.글목록(pageable));
+		return "index";
+	}
+	
+	//과거순 정렬
+    @GetMapping("/past")
+	public String latestIndex(Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.ASC) Pageable pageable) {
 		model.addAttribute("boards", boardService.글목록(pageable));
 		return "index";
 	}
@@ -35,6 +40,8 @@ public class BoardController {
 	public String save() {
 		return "/board/saveForm";
 	}
+	
+	
 	
 	
 	//게시글상세페이지 호출 메서드
@@ -58,5 +65,13 @@ public class BoardController {
 	}
 
 	
+	//서칭기능
+	@GetMapping("/board/search/{search}")
+	public String search(@PathVariable String search,Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.DESC) Pageable pageable) {
+		model.addAttribute("board",boardService.서칭("첫",pageable));	
+		return "/board/searchPage";
+	}
+	
+
 	
 }

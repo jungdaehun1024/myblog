@@ -1,40 +1,40 @@
-server:
-  port: 8000
-  servlet:
-    context-path: 
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
+server: #웹 서버의 구성을 나타낸다.
+  port: 8000  #서버의 포트 번호 지정
+  servlet: #서블릿 구성을 나타낸다.
+    context-path: #서블릿의 컨텍스트 경로를 지정한다. (지정안하면 '/')
+    encoding: #문자 인코딩 설정을 나타낸다.
+      charset: UTF-8 #문자 집합을 UTF-8로
+      enabled: true #문자 인코딩을 사용할지 여부
+      force: true #강제로 문자 인코딩을 적용할지 여부
 
 
-spring:
+spring: #스프링 프레임워크 설정
 
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+  mvc: #스프링 MVC 구성을 나타낸다.
+    view: # 뷰 리졸버 설정 (컨트롤러에서 뷰의 경로와 확장자를 명시적으로 적지않아도된다.)
+      prefix: /WEB-INF/views/  #JSP파일의 위치를 나타내는 접두사
+      suffix: .jsp #JSP파일의확장자를 나타내는 접미사
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/blog?serverTimeZone=Asia/Seoul
-    username: root
-    password: 182074
+  datasource: #데이터 소스 구성을 나타낸다. 
+    driver-class-name: com.mysql.cj.jdbc.Driver # 드라이브 클래스 이름 지정 
+    url: jdbc:mysql://localhost:3306/blog?serverTimeZone=Asia/Seoul #jdbc url 지정 
+    username: root #DB 연결할 사용자 이름
+    password: 182074 # DB연결할 사용자 패스워드
+ 
+  jpa: #JPA구성을 나태낸다.
+    open-in-view: true #영속성 컨텍스트를 뷰까지 열어둘지 여부 
+    hibernate: #하이버네이트 구성
+      ddl-auto: update #데이터베이스 스키마 자동 생성전략을 지정한다.
+      naming: #DB객체 네이밍 전략 
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 하이버네이트가 알아서 카멜케이스와 스네이크 케이스 매핑
+      use-new-id-generator-mappings: false #새로운 ID생성 전략을 사용할지 여부 
 
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      use-new-id-generator-mappings: false
-
-    show-sql: true
-    properties:
-      hibernate.format_sql: true  
+    show-sql: true #SQL 쿼리를 콘솔에 출력할지 여부
+    properties: # 하이버네이트 관련 추가 프로퍼티 지정 
+       hibernate.format_sql: true  #SQL쿼리 출력할 때 해당 설정이 활성화되면 쿼리가 보기쉽게 포맷팅
 
 
 
-jackson:
-  serialization:
-    fail-on-empty-beans: false
+jackson: #Jackson 라이브러리 설정
+  serialization: #직렬화 설정
+    fail-on-empty-beans: false #빈객체가 전달될때 실패할지 여부 

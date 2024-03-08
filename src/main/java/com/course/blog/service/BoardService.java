@@ -2,6 +2,8 @@ package com.course.blog.service;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.course.blog.dto.ReplySaveRequestDto;
 import com.course.blog.model.Board;
-import com.course.blog.model.Reply;
 import com.course.blog.model.User;
 import com.course.blog.repository.BoardRepository;
 import com.course.blog.repository.ReplyRepository;
@@ -91,5 +92,10 @@ public class BoardService {
 	replyRepository.deleteById(replyId);
  }
  
+ //서칭
+ public Page<Board> 서칭(String search,Pageable pageable){
+	 System.out.println(boardRepository.findByKeyword(search,pageable));
+	 return boardRepository.findByKeyword(search,pageable);
+ }
 }
 
