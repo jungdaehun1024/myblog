@@ -1,10 +1,10 @@
 package com.course.blog.repository;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.course.blog.model.Board;
 
@@ -15,11 +15,10 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	//T:JpaRepository가 작업할 대상 엔티티의 타입이다.
 	//ID: 엔티티 식별자의 타입이다. (엔티티의 PK를 나타낸다.)
 	
-	//게시글 찾기 
-	@Query(value="SELECT * FROM board WHERE title LIKE %:search%",nativeQuery = true)
-	Page<Board> findByKeyword(@Param("search")String search,Pageable pageable);
+	//게시글 찾기  
+	@Query(value="SELECT * FROM board WHERE  title LIKE CONCAT('%', ?1, '%')", nativeQuery = true)
+	List<Board> searchByKeyword(String search); 
 }
-
 
 
 

@@ -11,7 +11,6 @@
     </div>
   </div>
 </c:forEach>
-
 <!--페이징 로직  -->
 <ul class="pagination">
  <c:choose>
@@ -45,7 +44,14 @@
   <!--  -->
 <input id="search" placeholder="검색어를 입력하세요">
 <button id="btn-search" class="btn btn-secondary">검색</button>
-
 </div>
 </div>
+<c:forEach items="${searchList}" var ="searchList" >   <!--item속성에는 Collection객체가 들어갈 수 있다.-->
+  <div class="card m-2" >
+    <div class="card-body"> 
+      <h4 class="card-title">${searchList.title}</h4>  
+      <a href="/board/${searchList.id}" class="btn btn-primary">상세보기</a>
+    </div>
+  </div>
+</c:forEach>
 <%@ include file="layout/footer.jsp" %>

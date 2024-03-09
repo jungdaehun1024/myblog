@@ -1,5 +1,8 @@
 package com.course.blog.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -9,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.course.blog.model.Board;
 import com.course.blog.service.BoardService;
 //HTTP요청을 처리하는 컨트롤러역할을 수행하는 클래스 
 @Controller
@@ -25,6 +29,7 @@ public class BoardController {
 	// boardService.글목록(pageable)실행 결과를 boards라는 이름으로 뷰에 전달
 	public String index(Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.DESC) Pageable pageable) {
 		model.addAttribute("boards", boardService.글목록(pageable));
+//		System.out.println("LOG"+boardService.글목록(pageable));
 		return "index";
 	}
 	
@@ -66,12 +71,15 @@ public class BoardController {
 
 	
 	//서칭기능
-	@GetMapping("/board/search/{search}")
-	public String search(@PathVariable String search,Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.DESC) Pageable pageable) {
-		model.addAttribute("board",boardService.서칭("첫",pageable));	
-		return "/board/searchPage";
+	@GetMapping("/test/{search}")
+	public String search(@PathVariable String search,Model model) {
+		List<Board> searchList = new ArrayList();
+		searchList.addAll(boardService.search(search));
+
+		model.addAttribute("searchList",searchList); //글을 수정하기 위해 id값으로 게시글을 불러오는 것
+		return "index";
 	}
 	
-
+	
 	
 }

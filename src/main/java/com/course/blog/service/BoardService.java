@@ -93,9 +93,8 @@ public class BoardService {
  }
  
  //서칭
- public Page<Board> 서칭(String search,Pageable pageable){
-	 System.out.println(boardRepository.findByKeyword(search,pageable));
-	 return boardRepository.findByKeyword(search,pageable);
+ public List<Board> search(String search){
+	 return boardRepository.searchByKeyword(search);
  }
 }
 
