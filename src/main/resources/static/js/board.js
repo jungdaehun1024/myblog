@@ -18,6 +18,9 @@ let index={
         $("#btn-reply-save").on("click",()=>{
             this.replySave();
         });
+         $("#btn-search").on("click",()=>{
+            this.search();
+        });
     },
    
     save: function(){
@@ -43,6 +46,21 @@ let index={
        
         });
     },
+    
+    search: function(){
+		let keyword = $("#search").val();
+		
+		$.ajax({
+			type:"GET",
+			url:`/search/${keyword}`,
+			dataType: 'json', // 받은 데이터 타입을 JSON으로 명시
+		}).done(function(resp){
+			alert("게시글 찾기 성공")
+			 location.href = `/search/${keyword}`
+		}).fail(function(error){
+			alert("게시글 찾기 실패")
+		})
+	},
     
      update: function(){
 

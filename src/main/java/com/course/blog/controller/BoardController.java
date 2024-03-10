@@ -28,7 +28,7 @@ public class BoardController {
 	// 해당 어노테이션에서 지정한 페이지 설정은 Pageable인터페이스의 객체에 반영되어 메서드 호출시 사용된다.
 	// boardService.글목록(pageable)실행 결과를 boards라는 이름으로 뷰에 전달
 	public String index(Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.DESC) Pageable pageable) {
-		model.addAttribute("boards", boardService.글목록(pageable));
+		model.addAttribute("boards", boardService.listPosts(pageable));
 //		System.out.println("LOG"+boardService.글목록(pageable));
 		return "index";
 	}
@@ -36,7 +36,7 @@ public class BoardController {
 	//과거순 정렬
     @GetMapping("/past")
 	public String latestIndex(Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.ASC) Pageable pageable) {
-		model.addAttribute("boards", boardService.글목록(pageable));
+		model.addAttribute("boards", boardService.listPosts(pageable));
 		return "index";
 	}
 
@@ -54,7 +54,7 @@ public class BoardController {
 	//model인터페이스를 통해 뷰로 전달
 	@GetMapping("/board/{id}")
 	  public String boardDetails(@PathVariable int id, Model model) {
-		model.addAttribute("board",boardService.글상세보기(id));	
+		model.addAttribute("board",boardService.loadPostDetails(id));	
 		return "/board/detail";
 	}
 	
@@ -65,21 +65,19 @@ public class BoardController {
 	//그리고 /board/updateForm 화면을 보여준다.
 	@GetMapping("/board/{id}/updateForm")
 	public String updateForm(@PathVariable int id,Model model) {
-		model.addAttribute("board",boardService.글상세보기(id)); //글을 수정하기 위해 id값으로 게시글을 불러오는 것
+		model.addAttribute("board",boardService.loadPostDetails(id)); //글을 수정하기 위해 id값으로 게시글을 불러오는 것
 		return "/board/updateForm";
 	}
 
 	
 	//서칭기능
-	@GetMapping("/test/{search}")
+	@GetMapping("/search/{search}")
 	public String search(@PathVariable String search,Model model) {
 		List<Board> searchList = new ArrayList();
 		searchList.addAll(boardService.search(search));
-
 		model.addAttribute("searchList",searchList); //글을 수정하기 위해 id값으로 게시글을 불러오는 것
-		return "index";
+		return "search";
 	}
-	
 	
 	
 }
