@@ -29,7 +29,6 @@ public class BoardController {
 	// boardService.글목록(pageable)실행 결과를 boards라는 이름으로 뷰에 전달
 	public String index(Model model,@PageableDefault(page=0,size=3,sort="id",direction=Direction.DESC) Pageable pageable) {
 		model.addAttribute("boards", boardService.listPosts(pageable));
-//		System.out.println("LOG"+boardService.글목록(pageable));
 		return "index";
 	}
 	
@@ -75,9 +74,13 @@ public class BoardController {
 	public String search(@PathVariable String search,Model model) {
 		List<Board> searchList = new ArrayList();
 		searchList.addAll(boardService.search(search));
+		if(searchList.isEmpty()) {
+			return "/board/notFound";
+		}
 		model.addAttribute("searchList",searchList); //글을 수정하기 위해 id값으로 게시글을 불러오는 것
 		return "search";
 	}
 	
+
 	
 }

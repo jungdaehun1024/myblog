@@ -49,13 +49,15 @@ let index={
     
     search: function(){
 		let keyword = $("#search").val();
+		if(keyword ===""){
+			alert("검색어를 입력해주세요");  // 검색어를 입력하지 않고 검색버튼 클릭시 알러트
+			return 0;
+		}
 		
 		$.ajax({
 			type:"GET",
-			url:`/search/${keyword}`,
-			dataType: 'json', // 받은 데이터 타입을 JSON으로 명시
+			url:`/search/${keyword}`
 		}).done(function(resp){
-			alert("게시글 찾기 성공")
 			 location.href = `/search/${keyword}`
 		}).fail(function(error){
 			alert("게시글 찾기 실패")

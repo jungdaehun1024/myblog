@@ -2,6 +2,7 @@ package com.course.blog.service;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,9 @@ public class BoardService {
  
  //서칭
  public List<Board> search(String search){
-	 return boardRepository.searchByKeyword(search);
+	 List<Board> searchList = new ArrayList();
+	 searchList.addAll(boardRepository.searchByKeyword(search));
+	 return searchList;
  }
 }
 

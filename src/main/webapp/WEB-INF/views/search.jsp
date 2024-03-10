@@ -11,5 +11,4 @@
   </div>
 </c:forEach>
 <!--   -->
-
 <%@ include file="layout/footer.jsp" %>

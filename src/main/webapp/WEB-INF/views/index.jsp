@@ -32,7 +32,7 @@
 </ul>
 
 <div>
-<!-- 정렬 방법 -->
+<!-- 글정렬 방법 -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    글 정렬
@@ -42,10 +42,9 @@
     <a class="dropdown-item" href="/past">과거순</a>
   </div>
   <!--  -->
-  
+</div>
+</div>
 <input id="search" placeholder="검색어를 입력하세요">
 <button  id="btn-search" class="btn btn-secondary">검색</button>
-</div>
-</div>
 <script src="/js/board.js"></script>
 <%@ include file="layout/footer.jsp" %>
