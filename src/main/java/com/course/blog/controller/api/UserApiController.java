@@ -27,13 +27,13 @@ public class UserApiController {
     @PostMapping("/auth/joinProc")
     //json기반의 데이터 요청의 경우 @RequestBody를 사용한다. (http요청의 바디내용(Json)을 자바객체로 변환)
 	public ResponseDto<Integer> save(@RequestBody User user ){ 
-    	userService.회원가입(user);
+    	userService.signUp(user);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(),1); //http 상태코드와 1을포함한 ResponseDTO객체를 반환
 	}
     
     @PutMapping("/user")
     public ResponseDto<Integer> update(@RequestBody User user){
-    	userService.회원수정(user);
+    	userService.updateProfile(user);
     	//UsernamePasswordAuthenticationToken은 새로운 username,password를 받아 인증객체를 반환하고 authenticate()에 전달한다. authenticate는 
     	//UsernamePasswordAuthenticationToken로 인증된 인증객체를 유효하다고 판단해 Authentication객체를 반환
     	Authentication authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));

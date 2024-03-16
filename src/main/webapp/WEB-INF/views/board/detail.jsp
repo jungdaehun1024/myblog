@@ -6,9 +6,12 @@
 <div class="container">
 <button class="btn btn-secondary" onclick = "history.back()">돌아가기 </button>
 <c:if test="${board.user.id == principal.user.id}">
-  <a class="btn btn-warning href="/board/${board.id}/updateForm">수정</a>
+  <a class="btn btn-warning" href="/board/${board.id}/updateForm">수정</a>
   <button id ="btn-delete" class = "btn btn-danger">삭제</button>
 </c:if>
+<button id="btn-like" type="button" class="btn btn-primary">
+  Like<span id="currentLike" class="badge badge-light">${likes}</span>
+</button>
 <br><br>
 
 <div>

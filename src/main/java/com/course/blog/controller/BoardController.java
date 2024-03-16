@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.course.blog.model.Board;
 import com.course.blog.service.BoardService;
+import com.course.blog.service.LikesService;
 //HTTP요청을 처리하는 컨트롤러역할을 수행하는 클래스 
 @Controller
 public class BoardController {
@@ -22,6 +23,9 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
+	@Autowired
+	private LikesService likesService;
+	
 	//HTTP GET요청을 처리한다.
 	@GetMapping({ "", "/" })
 	//@PageableDefault:페이징을 위한 정보가 담겨있는 인터페이스,[시작페이지:0 , 한페이지에 글 3개씩 , 정렬기준:id , 내림차순]
@@ -54,6 +58,7 @@ public class BoardController {
 	@GetMapping("/board/{id}")
 	  public String boardDetails(@PathVariable int id, Model model) {
 		model.addAttribute("board",boardService.loadPostDetails(id));	
+		model.addAttribute("likes",likesService.initCountLikes(id));
 		return "/board/detail";
 	}
 	

@@ -1,5 +1,7 @@
 package com.course.blog.config.auth;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +17,7 @@ public class PrincipalDetailService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepsitory;
+	private final HttpSession httpSession = null;
 
 //	UserDetailsService를 사용하여 사용자의 인증 정보를 가져오고, 이 정보를 기반으로 사용자의 인증을 처리합니다
 // 사용자가 제공한 사용자명을 토대로 loadUserByUsername 메소드가 호출되어 사용자 정보를 가져오게 됩니다. 

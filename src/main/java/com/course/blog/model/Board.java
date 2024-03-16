@@ -41,7 +41,6 @@ public class Board {
 	@Column(nullable = false ,length = 100)
 	private String title;
 	
-	
 	@Lob// 대용량 데이터를 사용,(html태그가 섞여 디자인되어 글자의 용량이 커지기 때문에 사용)
 	private String content;
 	
@@ -68,6 +67,10 @@ public class Board {
 	
 	@Column
 	@CreationTimestamp
-	private Timestamp createDate;
+	private Timestamp createDate; 
+	
+	
+    @OneToMany(mappedBy = "board")
+    private List<Likes> likesList;
 
 }

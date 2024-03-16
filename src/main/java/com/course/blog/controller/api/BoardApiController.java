@@ -18,13 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.course.blog.config.auth.PrincipalDetail;
 import com.course.blog.dto.ReplySaveRequestDto;
 import com.course.blog.dto.ResponseDto;
+import com.course.blog.dto.BoardLikeDTO;
 import com.course.blog.model.Board;
 import com.course.blog.service.BoardService;
+import com.course.blog.service.LikesService;
 
 @RestController// 데이터만 리턴 
 public class BoardApiController {
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private LikesService likesService;
 	
 	//글작성
     @PostMapping("/api/board")
@@ -51,8 +56,6 @@ public class BoardApiController {
     //데이터를 받을 때 컨트롤러에서 dto만들어주서 받는게 좋다. 
     @PostMapping("/api/board/{boardId}/reply")
   	public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto){//@RequestBody: httpBody데이터를 받는다
-    
-   
       	boardService.writeReply(replySaveRequestDto);
   		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
   	}
@@ -64,11 +67,13 @@ public class BoardApiController {
     	return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
     }
     
-//    @GetMapping("/search/{search}")
-//    public  ResponseEntity<List<Board>> searchKeyword(@PathVariable String search){
-//    	 List<Board> searchList = boardService.search(search);
-//         return ResponseEntity.ok().body(searchList);
-//    }
+    
+    @PostMapping("/api/board/like/{boardId}")
+    public ResponseDto<Integer> likeSave(@RequestBody BoardLikeDTO boardLikeDTO){
+    	likesService.saveLikes(boardLikeDTO);
+    	int likes = likesService.countLikes(boardLikeDTO);
+    	return new ResponseDto<Integer>(HttpStatus.OK.value(),likes);
+    }
 }
 
 

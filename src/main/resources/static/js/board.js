@@ -21,6 +21,9 @@ let index={
          $("#btn-search").on("click",()=>{
             this.search();
         });
+         $("#btn-like").on("click",()=>{
+            this.likeSave();
+        })
     },
    
     save: function(){
@@ -47,6 +50,25 @@ let index={
         });
     },
     
+    likeSave:function(){
+		let data ={
+			boardId:$("#id").text(),
+			currentLike:$("#currentLike").text(),
+		}
+		
+		$.ajax({
+		  type:"POST",                                                 
+          url:`/api/board/like/${data.boardId}`,                                           
+          data:JSON.stringify(data),    //data객체를 Json형식의 문자열로                                 
+          contentType:"application/json;charset=utf-8", //Json타입을 요청으로 
+          dataType:"json" // 서버는 Json타입의 데이터를 받는다.
+		}).done(function(response){
+			  $("#currentLike").text(response.data);
+		}).fail(function(){
+			alert("실패");
+		})
+		
+	},
     search: function(){
 		let keyword = $("#search").val();
 		if(keyword ===""){
@@ -57,9 +79,9 @@ let index={
 		$.ajax({
 			type:"GET",
 			url:`/search/${keyword}`
-		}).done(function(resp){
+		}).done(function(){
 			 location.href = `/search/${keyword}`
-		}).fail(function(error){
+		}).fail(function(){
 			alert("게시글 찾기 실패")
 		})
 	},
