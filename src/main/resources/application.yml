@@ -24,7 +24,7 @@ spring: #스프링 프레임워크 설정
   jpa: #JPA구성을 나태낸다.
     open-in-view: true #영속성 컨텍스트를 뷰까지 열어둘지 여부 
     hibernate: #하이버네이트 구성
-      ddl-auto: create #데이터베이스 스키마 자동 생성전략을 지정한다.
+      ddl-auto: update #데이터베이스 스키마 자동 생성전략을 지정한다.
       naming: #DB객체 네이밍 전략 
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 하이버네이트가 알아서 카멜케이스와 스네이크 케이스 매핑
       use-new-id-generator-mappings: false #새로운 ID생성 전략을 사용할지 여부 

@@ -1,6 +1,7 @@
 package com.course.blog.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -41,6 +43,10 @@ public class User {
 	private Timestamp createDate;
 	
 	@Enumerated(EnumType.STRING)  // DB에는 RoleType이 존재하지 않아 enum이 String임을 알려주어야한다.
-	private RoleType role; 
+	private RoleType role;
+	
+	@OneToMany(mappedBy = "sender")
+	private List<Message> list;
+
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.course.blog.model.Board;
 import com.course.blog.service.BoardService;
 import com.course.blog.service.LikesService;
+import com.course.blog.service.MessageService;
 //HTTP요청을 처리하는 컨트롤러역할을 수행하는 클래스 
 @Controller
 public class BoardController {
@@ -25,6 +26,9 @@ public class BoardController {
 
 	@Autowired
 	private LikesService likesService;
+	
+	@Autowired
+	 private MessageService messageService;
 	
 	//HTTP GET요청을 처리한다.
 	@GetMapping({ "", "/" })
